@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>+420 510 510 469</title>
+    <style>
+        /* Nastavení barev a fontů */
+        :root {
+            --bg-color: #030303;
+            --text-subtle: #888888;
+            --text-main: #e0e0e0;
+            --accent-neon: #ff2a6d; /* Neonová růžová */
+            --accent-cyan: #05d9e8; /* Azurová pro glitch efekt */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at center, #111111 0%, #030303 70%);
+            color: var(--text-main);
+            font-family: 'Inter', Helvetica, Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            padding: 2rem;
+            animation: slowFadeIn 2.5s ease-out forwards;
+        }
+
+        .subtitle {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .phone-link {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Zvýraznění "69" */
+        .highlight-end {
+            color: var(--accent-neon);
+            text-shadow: 0 0 15px rgba(255, 42, 109, 0.5);
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover efekty - Glitch */
+        .phone-link:hover {
+            transform: scale(1.03);
+            color: #ffffff;
+            /* Rozjetí barev do stran (chromatická aberace) */
+            text-shadow: -3px 0 var(--accent-cyan), 3px 0 var(--accent-neon);
+        }
+
+        .phone-link:hover .highlight-end {
+             text-shadow: 0 0 30px var(--accent-neon), -3px 0 var(--accent-cyan), 3px 0 var(--accent-neon);
+        }
+
+        /* Toast notifikace */
+        .toast {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(20, 20, 20, 0.9);
+            color: var(--accent-cyan);
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(5, 217, 232, 0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @keyframes slowFadeIn {
+            0% { opacity: 0; transform: scale(0.95); filter: blur(10px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <p class="subtitle">zavolej... dokud to nezkusíš, nezjistíš...</p>
+        
+        <a href="tel:+420510510469" class="phone-link" id="phone" onclick="handleInteraction(event)">
+            +420 510 510 4<span class="highlight-end">69</span>
+        </a>
+    </div>
+
+    <div class="toast" id="toast">Zkopírováno. Good luck.</div>
+
+    <script>
+        function handleInteraction(event) {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            if (!isMobile) {
+                event.preventDefault();
+                const number = "+420 510 510 469";
+                
+                navigator.clipboard.writeText(number).then(() => {
+                    showToast();
+                }).catch(err => {
+                    console.error('Could not copy text: ', err);
+                });
+            }
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
