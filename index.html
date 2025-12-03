@@ -9,29 +9,24 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* Nastavení barev a fontů */
         :root {
             --bg-color: #030303;
             --text-subtle: #888888;
             --text-main: #e0e0e0;
             --accent-neon: #ff2a6d; 
             --accent-cyan: #05d9e8; 
+            --smooth-ease: cubic-bezier(0.33, 1, 0.68, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at center, #111111 0%, #030303 70%);
+            background-image: radial-gradient(circle at center, #111111 0%, #030303 80%);
             color: var(--text-main);
-            /* Teď už to bude fungovat všude */
             font-family: 'Inter', Helvetica, Arial, sans-serif;
             height: 100vh;
             display: flex;
@@ -43,78 +38,146 @@
 
         .container {
             position: relative;
-            padding: 2rem;
-            animation: slowFadeIn 2.5s ease-out forwards;
+            padding: 1rem;
+            width: 100%;
+            animation: slowFadeIn 2.5s var(--smooth-ease) forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
+        /* ZVĚTŠENÝ PODNADPIS */
         .subtitle {
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
-            letter-spacing: 0.2em;
+            font-size: clamp(1rem, 4vw, 1.6rem); /* Větší rozsah */
+            letter-spacing: 0.25em;
             text-transform: uppercase;
             color: var(--text-subtle);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             font-weight: 400;
             opacity: 0.8;
+            white-space: nowrap; /* Aby se nelámal */
         }
 
+        /* MASIVNÍ ČÍSLO */
         .phone-link {
             display: inline-block;
             text-decoration: none;
             color: var(--text-main);
-            font-size: clamp(2.5rem, 8vw, 5.5rem);
-            font-weight: 800; /* Extra tučné pro Inter */
-            letter-spacing: -0.04em; /* Inter potřebuje trochu víc scucnout u velkých nápisů */
+            /* Obrovský skok ve velikosti */
+            font-size: clamp(3rem, 13vw, 9rem); 
+            font-weight: 900; /* Extra tučné */
+            letter-spacing: -0.05em;
+            line-height: 1.1;
             position: relative;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.3s var(--smooth-ease);
             cursor: pointer;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+            z-index: 5;
+            white-space: nowrap; /* Zabrání zalomení na mobilu */
         }
 
         .highlight-end {
             color: var(--accent-neon);
-            text-shadow: 0 0 15px rgba(255, 42, 109, 0.5);
+            text-shadow: 0 0 25px rgba(255, 42, 109, 0.6);
             display: inline-block;
             transition: all 0.3s ease;
         }
 
         .phone-link:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
             color: #ffffff;
-            text-shadow: -3px 0 var(--accent-cyan), 3px 0 var(--accent-neon);
+            text-shadow: -4px 0 var(--accent-cyan), 4px 0 var(--accent-neon);
         }
-
         .phone-link:hover .highlight-end {
-             text-shadow: 0 0 30px var(--accent-neon), -3px 0 var(--accent-cyan), 3px 0 var(--accent-neon);
+             text-shadow: 0 0 50px var(--accent-neon), -5px 0 var(--accent-cyan), 5px 0 var(--accent-neon);
         }
 
+        /* --- SEKCE S ŠIPKOU --- */
+        .cta-container {
+            margin-top: 0.5rem;
+            /* Dynamický margin, aby to sedělo u velkého textu */
+            margin-left: 20vw; 
+            color: var(--accent-neon);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            animation: fadeInBlock 1.2s var(--smooth-ease) 1.5s forwards, neonPulse 3s infinite alternate ease-in-out 2.5s;
+            transform: rotate(-6deg);
+        }
+
+        /* ZVĚTŠENÝ TEXT "STAČÍ KLIKNOUT" */
+        .cta-text {
+            font-family: 'Caveat', cursive; 
+            font-size: clamp(2rem, 5vw, 3.5rem); /* Mnohem větší */
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-shadow: 0 0 12px var(--accent-neon);
+            margin-bottom: -15px;
+            margin-left: -30px;
+        }
+
+        /* ZVĚTŠENÁ ŠIPKA */
+        .drawn-arrow-svg {
+            width: clamp(80px, 15vw, 130px); /* Větší šipka */
+            height: auto;
+            overflow: visible;
+            filter: drop-shadow(0 0 8px var(--accent-neon));
+        }
+
+        .arrow-path {
+            fill: none;
+            stroke: var(--accent-neon);
+            stroke-width: 4; /* Tlustší čára */
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 250;
+            stroke-dashoffset: 250;
+            animation: drawArrow 1.2s var(--smooth-ease) 1.5s forwards;
+        }
+
+        /* --- ANIMACE --- */
+        @keyframes slowFadeIn {
+            0% { opacity: 0; transform: scale(0.9); filter: blur(15px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+
+        @keyframes fadeInBlock {
+            from { opacity: 0; transform: translateY(20px) rotate(-6deg); }
+            to { opacity: 1; transform: translateY(0) rotate(-6deg); }
+        }
+
+        @keyframes drawArrow {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes neonPulse {
+            from { filter: drop-shadow(0 0 4px var(--accent-neon)); opacity: 0.8; }
+            to { filter: drop-shadow(0 0 15px var(--accent-neon)); opacity: 1; }
+        }
+
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 3rem;
             left: 50%;
             transform: translateX(-50%) translateY(30px);
-            background: rgba(20, 20, 20, 0.9);
+            background: rgba(20, 20, 20, 0.95);
             color: var(--accent-cyan);
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-size: 1.1rem; /* Větší font i v notifikaci */
+            font-weight: 700;
             letter-spacing: 0.05em;
             opacity: 0;
             pointer-events: none;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(5, 217, 232, 0.2);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border: 1px solid rgba(5, 217, 232, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            z-index: 10;
         }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        @keyframes slowFadeIn {
-            0% { opacity: 0; transform: scale(0.95); filter: blur(10px); }
-            100% { opacity: 1; transform: scale(1); filter: blur(0); }
-        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
@@ -125,6 +188,13 @@
         <a href="tel:+420510510469" class="phone-link" id="phone" onclick="handleInteraction(event)">
             +420 510 510 4<span class="highlight-end">69</span>
         </a>
+
+        <div class="cta-container">
+            <svg class="drawn-arrow-svg" viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg">
+                <path class="arrow-path" d="M 25 75 C 25 75, 5 45, 30 10 M 40 20 L 30 10 L 15 20"/>
+            </svg>
+            <span class="cta-text">stačí kliknout</span>
+        </div>
     </div>
 
     <div class="toast" id="toast">Zkopírováno. Good luck.</div>
