@@ -9,7 +9,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -29,6 +29,8 @@
             color: var(--text-main);
             font-family: 'Inter', Helvetica, Arial, sans-serif;
             height: 100vh;
+            /* Fix pro mobilní prohlížeče (adresní řádek) */
+            min-height: -webkit-fill-available; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -40,6 +42,7 @@
             position: relative;
             padding: 1rem;
             width: 100%;
+            max-width: 100vw; /* Pojistka proti přetečení */
             animation: slowFadeIn 2.5s var(--smooth-ease) forwards;
             display: flex;
             flex-direction: column;
@@ -47,34 +50,37 @@
             justify-content: center;
         }
 
-        /* ZVĚTŠENÝ PODNADPIS */
+        /* PODNADPIS */
         .subtitle {
-            font-size: clamp(1rem, 4vw, 1.6rem); /* Větší rozsah */
-            letter-spacing: 0.25em;
+            font-size: clamp(0.8rem, 3vw, 1.6rem);
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--text-subtle);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2vh; /* Relativní k výšce */
             font-weight: 400;
             opacity: 0.8;
-            white-space: nowrap; /* Aby se nelámal */
+            padding: 0 1rem;
+            line-height: 1.5;
         }
 
-        /* MASIVNÍ ČÍSLO */
+        /* ČÍSLO - RESPONSIVNÍ VELIKOST */
         .phone-link {
             display: inline-block;
             text-decoration: none;
             color: var(--text-main);
-            /* Obrovský skok ve velikosti */
-            font-size: clamp(3rem, 13vw, 9rem); 
-            font-weight: 900; /* Extra tučné */
-            letter-spacing: -0.05em;
+            
+            /* DESKTOP DEFAULT */
+            font-size: clamp(3rem, 13vw, 9rem);
+            
+            font-weight: 900;
+            letter-spacing: -0.04em;
             line-height: 1.1;
             position: relative;
             transition: all 0.3s var(--smooth-ease);
             cursor: pointer;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
             z-index: 5;
-            white-space: nowrap; /* Zabrání zalomení na mobilu */
+            white-space: nowrap; 
         }
 
         .highlight-end {
@@ -93,11 +99,12 @@
              text-shadow: 0 0 50px var(--accent-neon), -5px 0 var(--accent-cyan), 5px 0 var(--accent-neon);
         }
 
-        /* --- SEKCE S ŠIPKOU --- */
+        /* --- ŠIPKA A CTA --- */
         .cta-container {
-            margin-top: 0.5rem;
-            /* Dynamický margin, aby to sedělo u velkého textu */
-            margin-left: 20vw; 
+            margin-top: 1vh;
+            /* Default pro Desktop */
+            margin-left: 15vw; 
+            
             color: var(--accent-neon);
             display: flex;
             flex-direction: column;
@@ -107,20 +114,18 @@
             transform: rotate(-6deg);
         }
 
-        /* ZVĚTŠENÝ TEXT "STAČÍ KLIKNOUT" */
         .cta-text {
             font-family: 'Caveat', cursive; 
-            font-size: clamp(2rem, 5vw, 3.5rem); /* Mnohem větší */
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
             font-weight: 700;
             letter-spacing: 0.02em;
             text-shadow: 0 0 12px var(--accent-neon);
-            margin-bottom: -15px;
-            margin-left: -30px;
+            margin-bottom: -0.4em;
+            margin-left: -0.5em;
         }
 
-        /* ZVĚTŠENÁ ŠIPKA */
         .drawn-arrow-svg {
-            width: clamp(80px, 15vw, 130px); /* Větší šipka */
+            width: clamp(60px, 12vw, 130px);
             height: auto;
             overflow: visible;
             filter: drop-shadow(0 0 8px var(--accent-neon));
@@ -129,12 +134,39 @@
         .arrow-path {
             fill: none;
             stroke: var(--accent-neon);
-            stroke-width: 4; /* Tlustší čára */
+            stroke-width: 4;
             stroke-linecap: round;
             stroke-linejoin: round;
             stroke-dasharray: 250;
             stroke-dashoffset: 250;
             animation: drawArrow 1.2s var(--smooth-ease) 1.5s forwards;
+        }
+
+        /* --- MOBILNÍ OPTIMALIZACE (pro obrazovky užší než 768px) --- */
+        @media (max-width: 768px) {
+            .subtitle {
+                font-size: 0.8rem;
+                letter-spacing: 0.15em;
+                margin-bottom: 1rem;
+                white-space: normal; /* Povolí zalamování textu */
+            }
+
+            .phone-link {
+                /* Na mobilu fixujeme velikost podle šířky, aby se to vždy vešlo */
+                font-size: 11.5vw; 
+                letter-spacing: -0.03em;
+            }
+
+            .cta-container {
+                /* Reset desktopových marginů */
+                margin-left: auto; 
+                margin-right: 0;
+                
+                /* Pozicování pod "69" */
+                align-self: flex-end; /* Zarovná kontejner doprava */
+                padding-right: 5vw; /* Odsazení od kraje */
+                transform: rotate(-4deg) scale(0.9); /* Trochu menší náklon */
+            }
         }
 
         /* --- ANIMACE --- */
@@ -167,7 +199,7 @@
             color: var(--accent-cyan);
             padding: 1rem 2rem;
             border-radius: 6px;
-            font-size: 1.1rem; /* Větší font i v notifikaci */
+            font-size: 1rem;
             font-weight: 700;
             letter-spacing: 0.05em;
             opacity: 0;
@@ -176,6 +208,8 @@
             border: 1px solid rgba(5, 217, 232, 0.3);
             box-shadow: 0 10px 30px rgba(0,0,0,0.7);
             z-index: 10;
+            width: max-content;
+            max-width: 80vw;
         }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     </style>
